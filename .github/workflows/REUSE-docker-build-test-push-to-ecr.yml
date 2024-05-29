@@ -8,14 +8,13 @@ on:
         required: true
       #AWS_SESSION_TOKEN:
       #  required: true
+      #AWS_REGION:
+      #  required: true
+    inputs:
       AWS_REGION:
         required: true
+        type: string
         default: 'us-east-1'
-    # Note this could be an input vs a secret
-    #inputs:
-    #  AWS_REGION:
-    #    required: true
-    #    type: string
 
 jobs:
   build-and-push:
@@ -35,7 +34,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           #aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ inputs.AWS_REGION }}
           #role-to-assume: arn:aws:iam::123456789012:role/my-githubactions-role
           role-duration-seconds: 1200
           role-session-name: GitHubActions-ECRPush
