@@ -10,10 +10,11 @@ jobs:
   call-ecr-push-workflow:
     uses: ./.github/workflows/REUSE-docker-build-test-push-to-ecr.yml
     # uses: myorg/myrepo/.github/workflows/REUSE-docker-build-test-push-to-ecr.yml@main
+    with:
+      AWS_REGION: "us-east-1"
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-    inputs:
-      AWS_REGION: "us-east-1"
+
 
