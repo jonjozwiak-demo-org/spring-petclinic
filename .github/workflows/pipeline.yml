@@ -1,4 +1,4 @@
-name: Build, Test, and Push to ECR
+name: Push to ECR
 on:
   push:
     branches: [ main ]
@@ -8,7 +8,8 @@ on:
 
 jobs:
   call-ecr-push-workflow:
-    uses: ./.github/workflows/REUSE-docker-build-test-push-to-ecr.yml@main
+    uses: ./.github/workflows/REUSE-docker-build-test-push-to-ecr.yml
+    # uses: myorg/myrepo/.github/workflows/REUSE-docker-build-test-push-to-ecr.yml@main
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

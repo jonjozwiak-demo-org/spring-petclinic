@@ -1,4 +1,4 @@
-name: ECR Push Workflow
+name: REUSABLE-ECR Push Workflow
 on:
   workflow_call:
     secrets:
