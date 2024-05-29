@@ -1,0 +1,17 @@
+name: Build, Test, and Push to ECR
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  call-ecr-push-workflow:
+    uses: jonjozwiak-demo-org/spring-petclinic/reusalbe-workflows/docker-build-test-push-to-ecr.yml@main
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_REGION: "us-east-1"
+
