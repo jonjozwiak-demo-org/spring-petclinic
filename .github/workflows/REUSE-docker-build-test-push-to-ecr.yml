@@ -11,6 +11,11 @@ on:
       AWS_REGION:
         required: true
         default: 'us-east-1'
+    # Note this could be an input vs a secret
+    #inputs:
+    #  AWS_REGION:
+    #    required: true
+    #    type: string
 
 jobs:
   build-and-push:
