@@ -31,11 +31,18 @@ Or you can run it from Maven directly using the Spring Boot Maven plugin. If you
 
 ## Building a Container
 
-There is no `Dockerfile` in this project. You can build a container image (if you have a docker daemon) using the Spring Boot build plugin:
+You can build a container image (if you have a docker daemon) using the Spring Boot build plugin:
 
 ```bash
 ./mvnw spring-boot:build-image
 ```
+
+Alternatively you can use the Dockerfile and build/test as follows: 
+
+```
+docker build -t spring-petclinic:3.3.0-SNAPSHOT . 
+docker run -p 80:8080 spring-petclinic:3.3.0-SNAPSHOT
+``` 
 
 ## In case you find a bug/suggested improvement for Spring Petclinic
 
