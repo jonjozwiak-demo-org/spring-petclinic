@@ -24,6 +24,7 @@ on:
       IMAGE:
         required: true
         type: string
+      ## NOTE: It is assumed namespace is the same as the service name
       SERVICE_NAME:
         required: true
         type: string
@@ -76,9 +77,12 @@ jobs:
       ## Add a 'validate step here to check the deployment status' - I'm just checking for a LoadBalancer URL
       - name: Fetch Application URL
         run: |
-          while :;do url=$(kubectl get service/${{ inputs.SERVICE_NAME }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' -n default);[ -z "$url" ]&&{ echo "URL is empty, retrying in 5 seconds...";sleep 5;}||{ export APP_URL="$url";echo "APP_URL set to: $APP_URL";break;};done;echo "APP_URL=$APP_URL">>$GITHUB_ENV
+          # Give time for service to be provisioned
+          sleep 5
+          # Loop until we get a URL
+          while :;do url=$(kubectl get service/${{ inputs.SERVICE_NAME }} -n ${{ inputs.SERVICE_NAME }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}');[ -z "$url" ]&&{ echo "URL is empty, retrying in 5 seconds...";sleep 5;}||{ export APP_URL="$url";echo "APP_URL set to: $APP_URL";break;};done;echo "APP_URL=$APP_URL">>$GITHUB_ENV
           # Ingress Example:
-          #while :;do url=$(kubectl get ingress/demo-app-ingress -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' -n default);[ -z "$url" ]&&{ echo "URL is empty, retrying in 5 seconds...";sleep 5;}||{ export APP_URL="$url";echo "APP_URL set to: $APP_URL";break;};done;echo "APP_URL=$APP_URL">>$GITHUB_ENV
+          #while :;do url=$(kubectl get ingress/${{ inputs.SERVICE_NAME }} -n ${{ inputs.SERVICE_NAME }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}');[ -z "$url" ]&&{ echo "URL is empty, retrying in 5 seconds...";sleep 5;}||{ export APP_URL="$url";echo "APP_URL set to: $APP_URL";break;};done;echo "APP_URL=$APP_URL">>$GITHUB_ENV
 
   ## Azure Example: https://github.com/marketplace/actions/kubernetes-bake
     ## Bakes a Helm chart and deploys it to a Kubernetes cluster
