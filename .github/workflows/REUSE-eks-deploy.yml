@@ -18,6 +18,9 @@ on:
       EKS_CLUSTER_NAME:
         required: true
         type: string
+      ENVIRONMENT:
+        required: true
+        type: string
       IMAGE:
         required: true
         type: string
