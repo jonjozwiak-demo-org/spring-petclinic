@@ -65,10 +65,12 @@ jobs:
       - name: Deploy to EKS
         run: |
           for file in manifests/*.yaml; do
+            echo "Processing $file..."
             sed -i -e "s|DOCKER_IMAGE|${{ inputs.IMAGE }}|g" "$file"
+            kubectl apply -f $file
           done
           ##sed -i.bak "s|DOCKER_IMAGE|${{ inputs.IMAGE }}|g" manifests/*.yaml && \
-          kubectl apply -f manifests/*.yaml
+          ##kubectl apply -f manifests/*.yaml
           ## ^^ Note this does not guarantee order of apply... 
 
       ## Add a 'validate step here to check the deployment status' - I'm just checking for a LoadBalancer URL
