@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: spring-petclinic
+  labels:
+    name: spring-petclinic

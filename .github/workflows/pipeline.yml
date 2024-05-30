@@ -17,4 +17,18 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
+  call-eks-deploy-workflow:
+    uses: ./.github/workflows/REUSE-eks-deploy.yml
+    needs: call-ecr-push-workflow
+    environment: Prod
+    # uses: myorg/myrepo/.github/workflows/REUSE-eks-deploy.yml@main
+    with:
+      AWS_REGION: "us-east-1"
+      EKS_CLUSTER_NAME: "demo-cluster"
+      IMAGE: ${{ needs.call-ecr-push-workflow.outputs.image }}
+      SERVICE_NAME: "spring-petclinic"
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 

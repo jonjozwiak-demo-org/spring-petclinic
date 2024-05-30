@@ -44,6 +44,12 @@ docker build -t spring-petclinic:3.3.0-SNAPSHOT .
 docker run -p 80:8080 spring-petclinic:3.3.0-SNAPSHOT
 ``` 
 
+## Sample EKS Config
+
+```bash
+eksctl create cluster --name=demo-cluster --nodes=1 --nodes-min=1 --nodes-max=3 --spot --instance-types=m6a.large,m7a.large,m7i.large --asg-access --region us-east-1
+```
+
 ## In case you find a bug/suggested improvement for Spring Petclinic
 
 Our issue tracker is available [here](https://github.com/spring-projects/spring-petclinic/issues).
